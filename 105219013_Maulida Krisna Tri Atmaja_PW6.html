@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Tagihan</title>
+</head>
+<body>
+
+    <h1>
+        <input type="image" src="logo.jpg" alt="Submit" style="float:left" width="48" height="48">
+        <p>PT. Once Sejahtera</p>   
+    </h1>
+    <label for= "nama">Nama Pelanggan: </label>
+    <input type="text" id="nama"><br>
+    <label for= "kategori" >Kategori: </label>
+        <select name="kategori" id="kategori">
+            <option value="sosial">Sosial</option>
+            <option value="rumah">Rumah</option>
+            <option value="apartmen">Apartmen</option>
+            <option value="industri">Industri</option>
+            <option value="villa">Villa</option>
+        </select><br>
+    <label for= "jumlah_pemakaian" >Jumlah Pemakaian: </label>
+    <input type="number" id="jumlah_pemakaian"><br>
+    <button onclick="calculate()">Submit</button>
+
+    
+    <div class="container table-responsive py-5"> 
+        <table class="table table-bordered table-hover" id="tabel">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">Jumlah</th>
+            <th scope="col">Tarif per-KWH</th>
+            <th scope="col">Abodemen</th>
+            <th scope="col">Sub Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="col">subtotal</th>
+                <th scope="row" id="subtotal"> </th>
+            </tr>
+            <tr>
+                <th scope="col">pajak</th>
+                <th scope="row" id="pajak"></th>
+            </tr>
+            <tr>
+                <th scope="col">bayar</th>
+                <th scope="row" id="bayar"></th>
+            </tr>
+        </tbody>
+        </table>
+        </div>
+    
+    <script> 
+        const list_kategori = {
+            "sosial" : {
+            "abodemen" : 10000,
+            "tarif" : 300,
+            "pajak" : 0
+            },
+            "rumah" : {
+            "abodemen" : 30000,
+            "tarif" : 500,
+            "pajak" : 0.10
+            },
+            "apartemen" : {
+            "abodemen" : 50000,
+            "tarif" : 750,
+            "pajak" : 0.15
+            },
+            "industri" : {
+            "abodemen" : 75000,
+            "tarif" : 1000,
+            "pajak" : 0.20
+            },
+            "villa" : {
+            "abodemen" : 100000,
+            "tarif" : 1250,
+            "pajak" : 0.25
+            },
+        }
+        
+        function calculate() {
+
+            
+            var nama = document.getElementById("nama").value;
+                var kategori = document.getElementById("kategori").value;
+                var hari = document.getElementById("jumlah_pemakaian").value;
+                let data= list_kategori[kategori];
+                for (let i = 1; i <= hari; i++) {
+                    var newRow = tabel.insertRow(i);
+                    var sel1 = newRow.insertCell(0);
+                    var sel2 = newRow.insertCell(1);
+                    var sel3 = newRow.insertCell(2);
+                    var sel4 = newRow.insertCell(3);
+                    var subtotal = (data.tarif*i)+data.abodemen;
+                    var pajak = data.pajak*subtotal;
+                    var bayar = pajak + subtotal;
+                    sel1.innerHTML = i;
+                    sel2.innerHTML = data.tarif*i;
+                    sel3.innerHTML = data.abodemen;
+                    sel4.innerHTML = subtotal;
+
+                }
+
+                document.getElementById("subtotal").innerText=subtotal;
+                document.getElementById("pajak").innerText=pajak;
+                document.getElementById("bayar").innerText=bayar;
+                
+                if (nama==''){
+                    alert("isi nama");
+                }
+                else if ( kategori = ''){
+                    alert("isi kategori");
+                } 
+                else if (hari>30){
+                    alert("hari tidak valid");
+                }
+
+            }
+    
+    
+    
+    </script>
+
+</body>
+</html> 
